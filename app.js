@@ -4,16 +4,20 @@ let backdrop = document.querySelector("#backdrop")
 let cancelBtn = document.querySelector(".btn--passive")
 let addMovieBtn2 = document.querySelector(".btn--success")
 let movieStore = []
-
+let sectionRemoval = document.querySelector("#entry-text")
 
 
 const addMovie = () => {
-modal.classList.add("visible")
+modal.classList.toggle("visible")
+// modal.classList.add("visible")
+// modal.style.display = "block"
 toggleBackdrop()
 }
 
 const toggleBackdrop = () => {
     backdrop.classList.toggle("visible")
+    // backdrop.classList.add("visible")
+    // backdrop.style.display = "block"
 }
 
 const cancelEvent = () => {
@@ -26,7 +30,8 @@ const hideBackdrop = () => {
     modal.classList.remove("visible")
     backdrop.classList.remove("visible")    
 }
-const  addMovieDetails  = () => {
+addMovieBtn2.addEventListener("click", () => {
+
     let title = document.querySelector("#title").value.trim()
     let imgLink = document.querySelector("#image-url").value.trim() 
     let rating = document.querySelector("#rating").value.trim() 
@@ -42,6 +47,16 @@ const  addMovieDetails  = () => {
                    movieRating : rating                   
                 }
                 movieStore.push(movieDetails)
+                addMovieTitle(movieDetails.title)
+                clearInputs()
+                // modal.style.display = "none"
+                // backdrop.style.display = "none"
+                // modal.classList.remove("visible")
+                // backdrop.classList.remove("visible")
+                modal.classList.toggle("visible")
+                backdrop.classList.toggle("visible")
+                removeSection()
+                
             }
         }else {
             alert("Please enter image URL")
@@ -50,20 +65,37 @@ const  addMovieDetails  = () => {
         alert("Please add movie title")
     }
 
-clearInputs()
+})
+    
 
-
-}
 const clearInputs = () => {
     document.querySelector("#title").value = ""
     document.querySelector("#image-url").value = ""
     document.querySelector("#rating").value = ""
 }
 
+function removeSection(){
+    if (movieStore[0] != null) {
+        sectionRemoval.style.display = "none"
+    }
+    else {
+        sectionRemoval.style.display = "block"
+    }
+}
+
+function addMovieTitle(title){
+    let ul  = document.getElementById("movie-list")
+    let movie = document.createElement('li')
+
+    movie.innerText = title
+
+ ul.appendChild(movie)
+
+}
 addMovieBtn1.addEventListener("click", addMovie)
 cancelBtn.addEventListener("click", cancelEvent)
 backdrop.addEventListener("click", hideBackdrop)
-addMovieBtn2.addEventListener("click", addMovieDetails)
+
 
 
 
